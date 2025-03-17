@@ -14,6 +14,7 @@ const Demo = styled('div')(({ theme }) => ({
 
 const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
     const [editWindowIndex, seteditWindowIndex] = useState();
+    const [editTitle, setEditTitle] = useState()
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(true);
 
@@ -27,11 +28,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
     }
 
     const editToDoListItem = (e, editWindowIndex) => {
-        const updatedData = todo.filter((item, i) => {
-            if (editWindowIndex === i) {
-                item.title1 = title
-            }
-        })
+
     }
 
     const findEditItemInList = (item, index) => {
@@ -39,36 +36,64 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
 
     }
 
+    const handleEditSubmit = (e, editWindowIndex) => {
+        e.preventDefault();
+        const updatedData = todo.filter((item, i) => {
+            if (editWindowIndex === i) {
+                item.title1 = editTitle
+            }
+        })
+        setTodo(updatedData);
+    }
+
+    console.log(todo);
+
+    const handleEditTodoTitle = (e) => {
+        console.log('title edit function called', e)
+        setEditTitle(e.target.value)
+        console.log(editTitle);
+    }
+
+
+
+
+
     return (
         <>
             <Demo>
                 <List dense={dense}>
                     {todo.map((item, index) => (
                         editWindowIndex === index ? (
-                            <div key={index}>    <TextField
-                                id="outlined-basic"
-                                label="Title"
-                                variant="outlined"
-                                name="title"
-                                value={title}
-                                onChange={addTitle}
-                            />
 
-                                <TextField
-                                    id="outlined-multiline-static"
-                                    label="Description"
-                                    multiline
-                                    rows={4}
-                                    name="description"
-                                    value={item.description1}
+                            <div key={index}>
 
-                                />
+                                <form action="" onSubmit={handleEditSubmit}  >
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="Title"
+                                        variant="outlined"
+                                        name="title"
+                                        // value={}
+                                        onChange={handleEditTodoTitle}
+                                    />
 
-                                <IconButton edge="end" aria-label="delete">
-                                    <Button variant="outlined" type='submit' >
-                                        <AddCircleIcon type='sumbit' fontSize="large"></AddCircleIcon>
-                                    </Button>
-                                </IconButton>
+                                    <TextField
+                                        id="outlined-multiline-static"
+                                        label="Description"
+                                        multiline
+                                        rows={4}
+                                        name="description"
+                                        value={item.description1}
+
+                                    />
+
+                                    <IconButton edge="end" aria-label="delete">
+                                        <Button variant="outlined" type='submit' >
+                                            <AddCircleIcon type='sumbit' fontSize="large"></AddCircleIcon>
+                                        </Button>
+                                    </IconButton>
+
+                                </form>
                             </div>) : (<ListItem
                                 key={index}
                                 secondaryAction={
