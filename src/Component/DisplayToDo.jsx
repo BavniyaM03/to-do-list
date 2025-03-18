@@ -13,8 +13,9 @@ const Demo = styled('div')(({ theme }) => ({
 }));
 
 const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
-    const [editWindowIndex, seteditWindowIndex] = useState();
-    const [editTitle, setEditTitle] = useState()
+    const [id, setId] = useState();
+    // const [editTitle, setEditTitle] = useState('')
+    const [editTitle, setEditTitle] = useState({ editTitleValue: '', editDescription: '' })
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(true);
 
@@ -27,43 +28,50 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
         console.log('after delete', todo)
     }
 
-    const editToDoListItem = (e, editWindowIndex) => {
-
-    }
-
     const findEditItemInList = (item, index) => {
-        seteditWindowIndex(index);
-
+        setId(index);
     }
 
-    const handleEditSubmit = (e, editWindowIndex) => {
+
+    const handleEditSubmit = (e) => {
         e.preventDefault();
+        console.log(41, id)
         const updatedData = todo.filter((item, i) => {
-            if (editWindowIndex === i) {
-                item.title1 = editTitle
+            if (id === i) {
+            item.title1 = editTitle.editTitleValue;
+            item.description1 = editTitle.editDescription;
             }
+            return item;
         })
+        console.log('after update todo', updatedData)
+        console.log(36, id);
         setTodo(updatedData);
+        setId();
     }
 
-    console.log(todo);
+
+
 
     const handleEditTodoTitle = (e) => {
-        console.log('title edit function called', e)
-        setEditTitle(e.target.value)
-        console.log(editTitle);
+        let name = e.target.name;
+        let value = e.target.value;
+        console.log(name, value)
+        setEditTitle((prev) => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        })
     }
 
-
-
-
+    console.log(editTitle);
 
     return (
         <>
             <Demo>
                 <List dense={dense}>
                     {todo.map((item, index) => (
-                        editWindowIndex === index ? (
+                        id === index ? (
 
                             <div key={index}>
 
@@ -72,8 +80,8 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         id="outlined-basic"
                                         label="Title"
                                         variant="outlined"
-                                        name="title"
-                                        // value={}
+                                        name="editTitleValue"
+                                        value={editTitle.editTitleValue}
                                         onChange={handleEditTodoTitle}
                                     />
 
@@ -82,9 +90,9 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         label="Description"
                                         multiline
                                         rows={4}
-                                        name="description"
-                                        value={item.description1}
-
+                                        name="editDescription"
+                                        value={editTitle.editDescription}
+                                        onChange={handleEditTodoTitle}
                                     />
 
                                     <IconButton edge="end" aria-label="delete">

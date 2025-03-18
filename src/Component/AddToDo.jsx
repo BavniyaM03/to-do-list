@@ -35,7 +35,7 @@ export default function AddToDo() {
         setTitle('')
         setDescription('')
     }
-    console.log(todo);
+    
     return (
         <>
             <CssBaseline />
