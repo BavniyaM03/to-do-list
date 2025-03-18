@@ -3,9 +3,12 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import SearchedTodoValue from './SearchedTodoValue';
 
 function Search({ todo }) {
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchResult, setSearchResult] = useState({title: '', description: ''});
+    const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
 
     function debounce(func, delay) {
         let timeout;
@@ -21,12 +24,16 @@ function Search({ todo }) {
         setSearchQuery(userInput);
         const searchTodo = todo.filter((item, i) => {
             if (userInput === item.title1) {
+                setDisplaySearchTodo(true);
                 return item;
             }
             return 0;
         })
-        console.log('search todo', searchTodo);
+        setSearchResult(searchTodo);
+        console.log('searchTodo', searchTodo);
     }
+
+    console.log('searchResult', searchResult)
 
     const dSearch = debounce(filteredTodoItem, 600);
 
@@ -47,6 +54,8 @@ function Search({ todo }) {
                     <SearchIcon onClick={() => dSearch(searchQuery)} />
                 </IconButton>
             </Paper>
+
+            <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo}/>
         </>
     )
 }
