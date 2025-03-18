@@ -33,6 +33,12 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
 
     const findEditItemInList = (item, index) => {
         setId(index);
+        seteditTodoTitleDescriptionStatus({
+            editTodoTitleDescriptionStatusValue: item.title1, 
+            editDescription: item.description1, 
+            editStatus: item.status1, editPriority: item.priority1
+        })
+        console.log(36, item);
     }
 
 
@@ -86,6 +92,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         label="Title"
                                         variant="outlined"
                                         name="editTodoTitleDescriptionStatusValue"
+                                        // value={item.title1}
                                         value={editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue}
                                         onChange={handleEditTodo}
                                     />
@@ -150,7 +157,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
 
 
                     ))}
-                    
+
                     <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo} />
 
                 </List>
