@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchedTodoValue from './SearchedTodoValue';
+import { ManageVisibilityContext } from '../App';
 
 function Search({ todo }) {
+
+    const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
+
+
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResult, setSearchResult] = useState({title: '', description: ''});
-    const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
+    // const [searchResult, setSearchResult] = useState({ title: '', description: '' });
+    // const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
+
 
     function debounce(func, delay) {
         let timeout;
@@ -20,18 +26,48 @@ function Search({ todo }) {
         };
     }
 
+    // const filteredTodoItem = (userInput) => {
+    //     setSearchQuery(userInput);
+    //     const searchTodo = todo.filter((item, i) => {
+    //         if (userInput === item.title1) {
+    //             setDisplaySearchTodo(true);
+    //             return item;
+    //         }
+    //         return 0;
+    //     })
+    //     setSearchResult(searchTodo);
+    //     console.log('searchTodo', searchTodo);
+    // }
+
+
     const filteredTodoItem = (userInput) => {
         setSearchQuery(userInput);
         const searchTodo = todo.filter((item, i) => {
             if (userInput === item.title1) {
+                setTodoDisplay(false)
+                console.log('odoDisplay', todoDisplay)
                 setDisplaySearchTodo(true);
                 return item;
             }
-            return 0;
+            else if (userInput === item.status1) {
+                setTodoDisplay(false)
+                console.log('status', item.status1)
+                setDisplaySearchTodo(true);
+                return item;
+            }
+            return console.log(45, 'invalid input')
         })
         setSearchResult(searchTodo);
+        if(searchTodo.length === 0){
+            setTodoDisplay(true);
+        }
         console.log('searchTodo', searchTodo);
     }
+
+
+
+
+
 
     console.log('searchResult', searchResult)
 
@@ -55,7 +91,7 @@ function Search({ todo }) {
                 </IconButton>
             </Paper>
 
-            <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo}/>
+            
         </>
     )
 }

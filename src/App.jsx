@@ -1,15 +1,17 @@
-import { createContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import './App.css'
 import AddToDo from './Component/AddToDo'
-createContext
 
+export const ManageVisibilityContext = createContext();
 
 function App() {
-  const [visibilityTodo, setVisibilityTodo] = useState(true);
-  const ManageVisibilityContext = createContext();
+  const [todoDisplay, setTodoDisplay] = useState(true);
+  const [searchResult, setSearchResult] = useState({ title: '', description: '' });
+  const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
   return (
     <>
-      <ManageVisibilityContext.Provider value={visibilityTodo}>
+      <ManageVisibilityContext.Provider
+        value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo }} >
         <AddToDo />
       </ManageVisibilityContext.Provider>
     </>

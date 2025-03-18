@@ -8,11 +8,9 @@ function SearchedTodoValue({ searchResult, displaySearchTodo }) {
     const [secondary, setSecondary] = React.useState(true);
     return (
         <>
-
-            {console.log(12, searchResult)}
-            {console.log(12, typeof searchResult)}
             {displaySearchTodo && (
                 searchResult.map((item, i) => (<ListItem
+                    key={i}
                     secondaryAction={
                         <div>
                             <IconButton edge="end" aria-label="delete">
@@ -24,10 +22,9 @@ function SearchedTodoValue({ searchResult, displaySearchTodo }) {
                         </div>
                     }
                 >
-                    <ListItemText
-                        primary={item.title1}
-                        secondary={secondary ? item.description1 : null}
-                    />
+
+                    <ListItemText> <h2>{item.title1}</h2> <p>{item.description1} <br /> Priority :  {item.priority1} <br />status : <i>{item.status1} </i> </p> </ListItemText>
+
                 </ListItem>))
             )}
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Button, List, TextField } from '@mui/material';
 import { ListItem } from '@mui/material';
@@ -7,17 +7,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ListItemText } from '@mui/material'
 import { Edit } from '@mui/icons-material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { ManageVisibilityContext } from '../App';
+import SearchedTodoValue from './SearchedTodoValue';
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
 }));
 
 const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
+    const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
     const [id, setId] = useState();
-    // const [editTitle, setEditTitle] = useState('')
-    const [editTitle, setEditTitle] = useState({ editTitleValue: '', editDescription: '' })
+    // const [editTodoTitleDescriptionStatus, seteditTodoTitleDescriptionStatus] = useState('')
+    const [editTodoTitleDescriptionStatus, seteditTodoTitleDescriptionStatus] = useState({ editTodoTitleDescriptionStatusValue: '', editDescription: '', editStatus: '', editPriority: '' })
     const [dense, setDense] = React.useState(false);
-    const [secondary, setSecondary] = React.useState(true);
+    // const [todoDisplay, setDisplayTodo] = React.useState(true);
 
     const deleteToDo = (index) => {
         // console.log(e);
@@ -38,8 +41,10 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
         console.log(41, id)
         const updatedData = todo.filter((item, i) => {
             if (id === i) {
-            item.title1 = editTitle.editTitleValue;
-            item.description1 = editTitle.editDescription;
+                item.title1 = editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue;
+                item.description1 = editTodoTitleDescriptionStatus.editDescription;
+                item.status1 = editTodoTitleDescriptionStatus.editStatus;
+                item.priority1 = editTodoTitleDescriptionStatus.editPriority;
             }
             return item;
         })
@@ -52,11 +57,11 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
 
 
 
-    const handleEditTodoTitle = (e) => {
+    const handleEditTodo = (e) => {
         let name = e.target.name;
         let value = e.target.value;
         console.log(name, value)
-        setEditTitle((prev) => {
+        seteditTodoTitleDescriptionStatus((prev) => {
             return {
                 ...prev,
                 [name]: value
@@ -64,7 +69,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
         })
     }
 
-    console.log(editTitle);
+    console.log(editTodoTitleDescriptionStatus);
 
     return (
         <>
@@ -80,9 +85,9 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         id="outlined-basic"
                                         label="Title"
                                         variant="outlined"
-                                        name="editTitleValue"
-                                        value={editTitle.editTitleValue}
-                                        onChange={handleEditTodoTitle}
+                                        name="editTodoTitleDescriptionStatusValue"
+                                        value={editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue}
+                                        onChange={handleEditTodo}
                                     />
 
                                     <TextField
@@ -91,9 +96,25 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         multiline
                                         rows={4}
                                         name="editDescription"
-                                        value={editTitle.editDescription}
-                                        onChange={handleEditTodoTitle}
+                                        value={editTodoTitleDescriptionStatus.editDescription}
+                                        onChange={handleEditTodo}
                                     />
+
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="Status"
+                                        variant="outlined"
+                                        name="editStatus"
+                                        value={editTodoTitleDescriptionStatus.editStatus}
+                                        onChange={handleEditTodo} />
+
+                                    <TextField
+                                        id="outlined-basic"
+                                        label="Priority"
+                                        variant="outlined"
+                                        name="Priority"
+                                        value={editTodoTitleDescriptionStatus.editPriority}
+                                        onChange={handleEditTodo} />
 
                                     <IconButton edge="end" aria-label="delete">
                                         <Button variant="outlined" type='submit' >
@@ -102,32 +123,35 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                     </IconButton>
 
                                 </form>
-                            </div>) : (<ListItem
+                            </div>) : (
+
+                            (todoDisplay ? (<ListItem
+
                                 key={index}
                                 secondaryAction={
-                                    <>
+                                    <div>
+                                        {console.log(132, todoDisplay)}
                                         <IconButton edge="end" aria-label="delete">
                                             <DeleteIcon onClick={() => deleteToDo(index)} />
                                         </IconButton>
                                         <IconButton edge="end" aria-label="delete">
                                             <Edit onClick={() => findEditItemInList(item, index)} />
                                         </IconButton>
-                                    </>
+                                    </div>
                                 }
                             >
 
                                 {/* {console.log(item)} */}
 
 
-                                <ListItemText
-                                    primary={item.title1}
-                                    secondary={secondary ? item.description1 : null}
-                                />
-                            </ListItem>)
+                                <ListItemText> <h2>{item.title1}</h2> <p>{item.description1} <br /> Priority :  {item.priority1} <br />status : <i>{item.status1} </i> </p> </ListItemText>
+                            </ListItem>) : (null))
+                        )
 
 
                     ))}
-
+                    
+                    <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo} />
 
                 </List>
             </Demo>
