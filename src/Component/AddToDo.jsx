@@ -7,19 +7,19 @@ import { Button } from '@mui/material';
 import Header from './Header';
 import DisplayToDo from './DisplayToDo';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Search from './Search';
 
 export default function AddToDo() {
 
     const [todo, setTodo] = useState([])
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+
    
 
     const addTitle = (e) => {
         setTitle(e.target.value)
     }
-
-    // console.log("this is title", title, "this is desciption", description)
 
     const addDescription = (e) => {
         setDescription(e.target.value)
@@ -35,12 +35,13 @@ export default function AddToDo() {
         setTitle('')
         setDescription('')
     }
-    
+
     return (
         <>
             <CssBaseline />
             <Container >
                 <Header />
+                <Search todo={todo} />
                 <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
 
                     <form action="" onSubmit={addToDoInList}  >
