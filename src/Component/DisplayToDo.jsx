@@ -5,14 +5,20 @@ import { ListItem } from '@mui/material';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ListItemText } from '@mui/material'
-import { Edit } from '@mui/icons-material';
+import { CheckBox, CheckBoxOutlineBlank, Edit } from '@mui/icons-material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { ManageVisibilityContext } from '../App';
 import SearchedTodoValue from './SearchedTodoValue';
+import DropDownStatusEdit from './DropDownStatusEdit';
+import PriorityDropDownEdit from './PriorityDropDownEdit';
+import {CheckBoxComponent} from './CheckBox';
+
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
 }));
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
     const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
@@ -24,18 +30,21 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
 
     const deleteToDo = (index) => {
         // console.log(e);
-        const finalTodo = todo.filter((item, i) =>
-            index != i
-        )
-        setTodo(finalTodo);
-        console.log('after delete', todo)
+        const result = confirm('Are you sure you want to delete');
+        if (result === true) {
+            const finalTodo = todo.filter((item, i) =>
+                index != i
+            )
+            setTodo(finalTodo);
+            alert('are you sure you want to delete')
+        }
     }
 
     const findEditItemInList = (item, index) => {
         setId(index);
         seteditTodoTitleDescriptionStatus({
-            editTodoTitleDescriptionStatusValue: item.title1, 
-            editDescription: item.description1, 
+            editTodoTitleDescriptionStatusValue: item.title1,
+            editDescription: item.description1,
             editStatus: item.status1, editPriority: item.priority1
         })
         console.log(36, item);
@@ -107,21 +116,26 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         onChange={handleEditTodo}
                                     />
 
-                                    <TextField
+
+                                    {/* <TextField
                                         id="outlined-basic"
                                         label="Status"
                                         variant="outlined"
                                         name="editStatus"
                                         value={editTodoTitleDescriptionStatus.editStatus}
-                                        onChange={handleEditTodo} />
+                                        onChange={handleEditTodo} /> */}
 
-                                    <TextField
+                                    <DropDownStatusEdit value={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
+
+                                    {/* <TextField
                                         id="outlined-basic"
                                         label="Priority"
                                         variant="outlined"
                                         name="Priority"
                                         value={editTodoTitleDescriptionStatus.editPriority}
-                                        onChange={handleEditTodo} />
+                                        onChange={handleEditTodo} /> */}
+
+                                    <PriorityDropDownEdit editTodoTitleDescriptionStatus={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
 
                                     <IconButton edge="end" aria-label="delete">
                                         <Button variant="outlined" type='submit' >
@@ -144,6 +158,12 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         <IconButton edge="end" aria-label="delete">
                                             <Edit onClick={() => findEditItemInList(item, index)} />
                                         </IconButton>
+                                        <IconButton>
+                                            <CheckBoxComponent idx={index} />
+                                        </IconButton>
+                                        
+                                        
+                                        
                                     </div>
                                 }
                             >

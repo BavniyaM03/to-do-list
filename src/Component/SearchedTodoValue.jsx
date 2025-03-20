@@ -13,10 +13,10 @@ function SearchedTodoValue({ searchResult, displaySearchTodo }) {
                     key={i}
                     secondaryAction={
                         <div>
-                            <IconButton edge="end" aria-label="delete">
+                            <IconButton edge="end" aria-label="delete" disabled>
                                 <DeleteIcon onClick={() => deleteToDo(index)} />
                             </IconButton>
-                            <IconButton edge="end" aria-label="delete">
+                            <IconButton edge="end" aria-label="delete" disabled>
                                 <Edit onClick={() => findEditItemInList(item, index)} />
                             </IconButton>
                         </div>

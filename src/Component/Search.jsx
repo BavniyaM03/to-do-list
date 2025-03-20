@@ -55,10 +55,17 @@ function Search({ todo }) {
                 setDisplaySearchTodo(true);
                 return item;
             }
+            else if (userInput === item.priority1) {
+                setTodoDisplay(false)
+                console.log('status', item.status1)
+                setDisplaySearchTodo(true);
+                return item;
+            }
+
             return console.log(45, 'invalid input')
         })
         setSearchResult(searchTodo);
-        if(searchTodo.length === 0){
+        if (searchTodo.length === 0) {
             setTodoDisplay(true);
         }
         console.log('searchTodo', searchTodo);
@@ -91,7 +98,7 @@ function Search({ todo }) {
                 </IconButton>
             </Paper>
 
-            
+
         </>
     )
 }
