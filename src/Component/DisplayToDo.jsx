@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button, List, TextField } from '@mui/material';
+import { Button, List} from '@mui/material';
 import { ListItem } from '@mui/material';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,7 +13,7 @@ import DropDownStatusEdit from './DropDownStatusEdit';
 import PriorityDropDownEdit from './PriorityDropDownEdit';
 import { CheckBoxComponent } from './CheckBox';
 import DeleteBulk from './DeleteBulk';
-
+import CommonTextField from './common-component/CommonTextField';
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -108,44 +108,26 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                             <div key={index}>
 
                                 <form action="" onSubmit={handleEditSubmit}  >
-                                    <TextField
-                                        id="outlined-basic"
+
+                                    <CommonTextField id="outlined-basic"
                                         label="Title"
                                         variant="outlined"
                                         name="editTodoTitleDescriptionStatusValue"
-                                        // value={item.title1}
                                         value={editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue}
-                                        onChange={handleEditTodo}
-                                    />
+                                        onChange={handleEditTodo} />
 
-                                    <TextField
-                                        id="outlined-multiline-static"
+                                    <CommonTextField id="outlined-multiline-static"
                                         label="Description"
+                                        variant="outlined"
                                         multiline
                                         rows={4}
                                         name="editDescription"
                                         value={editTodoTitleDescriptionStatus.editDescription}
-                                        onChange={handleEditTodo}
-                                    />
+                                        onChange={handleEditTodo} />
 
-
-                                    {/* <TextField
-                                        id="outlined-basic"
-                                        label="Status"
-                                        variant="outlined"
-                                        name="editStatus"
-                                        value={editTodoTitleDescriptionStatus.editStatus}
-                                        onChange={handleEditTodo} /> */}
 
                                     <DropDownStatusEdit value={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
 
-                                    {/* <TextField
-                                        id="outlined-basic"
-                                        label="Priority"
-                                        variant="outlined"
-                                        name="Priority"
-                                        value={editTodoTitleDescriptionStatus.editPriority}
-                                        onChange={handleEditTodo} /> */}
 
                                     <PriorityDropDownEdit editTodoTitleDescriptionStatus={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
 
@@ -193,7 +175,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                         (finalTodoAfterDeletion.map((element, index) => (
                             <div key={index}>
                                 <ListItem
-                                    
+
                                     secondaryAction={
                                         <div>
                                             {console.log(132, todoDisplay)}

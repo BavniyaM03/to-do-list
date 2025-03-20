@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Icon, IconButton, TextField } from '@mui/material';
+import { Icon, IconButton} from '@mui/material';
 import { Button } from '@mui/material';
 import Header from './Header';
 import DisplayToDo from './DisplayToDo';
@@ -12,6 +12,7 @@ import DropDown from './DropDownStatus';
 import { AllTodoContext, ManageVisibilityContext } from '../App';
 import PriorityDropDown from './PriorityDropDown';
 import DropDownStatus from './DropDownStatus';
+import CommonTextField from './common-component/CommonTextField';
 
 export default function AddToDo() {
     const { status, setStatus, priority, setPriority } = useContext(ManageVisibilityContext);
@@ -96,44 +97,28 @@ export default function AddToDo() {
                 <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
 
                     <form action="" onSubmit={addToDoInList}  >
-                        <TextField
+
+                        <CommonTextField
                             id="outlined-basic"
                             label="Title"
                             variant="outlined"
                             name="title"
                             value={title}
                             onChange={addTitle}
-                            sx={{minWidth: '25%'}} />
+                            sx={{ minWidth: '25%' }} />
 
-                        <TextField
+                        <CommonTextField
                             id="outlined-multiline-static"
                             label="Description"
+                            variant="outlined"
                             multiline
                             rows={4}
-                            name="description"
+                            name="editDescription"
                             value={description}
-                            onChange={addDescription}
-                            sx={{minWidth: '35%'}}
-                        />
-
-                        {/* <TextField
-                            id="outlined-basic"
-                            label="Status"
-                            variant="outlined"
-                            name="status"
-                            value={status}
-                            onChange={addStatus} /> */}
+                            onChange={addDescription} 
+                            sx={{ minWidth: '35%' }}/>
 
                         <DropDownStatus addStatus={addStatus} />
-
-
-                        {/* <TextField
-                            id="outlined-basic"
-                            label="Priority"
-                            variant="outlined"
-                            name="priority"
-                            value={priority}
-                            onChange={addPriority} /> */}
 
                         <PriorityDropDown addPriority={addPriority} />
 
