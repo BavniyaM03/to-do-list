@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import { Button } from '@mui/material';
 
-const CommonButton = ({ sx, edge, ariaLabel, variant, typeButton, icon, text, onClick }) => {
+const CommonButton = ({value, sx, edge, ariaLabel, variant, typeButton, icon, text, onClick }) => {
 
     return (
         <>

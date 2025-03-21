@@ -1,7 +1,7 @@
 function InvalidSearch(){
     return (
         <>
-        <h1>Sorry, No To Do Found!</h1>
+        <h1>Sorry, No Todo Found!</h1>
         </>
     )
 }

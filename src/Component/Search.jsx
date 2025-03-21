@@ -9,10 +9,8 @@ function Search({ todo }) {
 
     const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
 
-
     const [searchQuery, setSearchQuery] = useState('');
-    // const [searchResult, setSearchResult] = useState({ title: '', description: '' });
-    // const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
+
 
 
     function debounce(func, delay) {
@@ -24,19 +22,6 @@ function Search({ todo }) {
             }, delay);
         };
     }
-
-    // const filteredTodoItem = (userInput) => {
-    //     setSearchQuery(userInput);
-    //     const searchTodo = todo.filter((item, i) => {
-    //         if (userInput === item.title1) {
-    //             setDisplaySearchTodo(true);
-    //             return item;
-    //         }
-    //         return 0;
-    //     })
-    //     setSearchResult(searchTodo);
-    //     console.log('searchTodo', searchTodo);
-    // }
 
 
     const filteredTodoItem = (userInput) => {
@@ -71,13 +56,7 @@ function Search({ todo }) {
     }
 
 
-
-
-
-
-    console.log('searchResult', searchResult)
-
-    const dSearch = debounce(filteredTodoItem, 600);
+    const dSearch = debounce(filteredTodoItem, 1000);
 
     return (
         <>
@@ -92,11 +71,11 @@ function Search({ todo }) {
                     inputProps={{ 'aria-label': 'search google maps' }}
                 />
 
-                <CommonButton type="button" 
-                sx={{ p: '10px' }}  
-                ariaLabel="search" 
-                onClick={() => dSearch(searchQuery)} 
-                icon={<SearchIcon/>} />
+                <CommonButton type="button"
+                    sx={{ p: '10px' }}
+                    ariaLabel="search"
+                    onClick={() => dSearch(searchQuery)}
+                    icon={<SearchIcon />} />
 
             </Paper>
 

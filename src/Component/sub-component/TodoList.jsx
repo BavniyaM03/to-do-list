@@ -1,43 +1,34 @@
 import React, { useContext, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { List } from '@mui/material';
-import { ListItem } from '@mui/material';
-import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ListItemText } from '@mui/material'
-import { Edit } from '@mui/icons-material';
-import { CheckedTodoContext, finalTodoAfterDeletionContext, ManageVisibilityContext } from '../App';
-import SearchedTodoValue from './SearchedTodoValue';
-import DropDownStatusEdit from './DropDownStatusEdit';
-import PriorityDropDownEdit from './PriorityDropDownEdit';
-import { CheckBoxComponent } from './CheckBox';
-import DeleteBulk from './DeleteBulk';
-import CommonTextField from './common-component/CommonTextField';
-import CommonButton from './common-component/CommonButton';
+import { AllTodoContext, CheckedTodoContext, finalTodoAfterDeletionContext, ManageVisibilityContext } from '../../App';
+import SearchedTodoValue from '../SearchedTodoValue';
+import DropDownStatusEdit from '../DropDownStatusEdit';
+import PriorityDropDownEdit from '../PriorityDropDownEdit';
+import DeleteBulk from '../DeleteBulk';
+import CommonTextField from '../common-component/CommonTextField';
+import CommonButton from '../common-component/CommonButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CommonTodoList from '../common-component/CommonTodoList';
+import { CommonCheckBox } from '../common-component/CommonCheckBox';
+import { Edit } from '@mui/icons-material';
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
 }));
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
-    const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
+function TodoList() {
+    const { todoDisplay, searchResult, displaySearchTodo } = useContext(ManageVisibilityContext);
     const [id, setId] = useState();
-    // const [editTodoTitleDescriptionStatus, seteditTodoTitleDescriptionStatus] = useState('')
     const [editTodoTitleDescriptionStatus, seteditTodoTitleDescriptionStatus] = useState({ editTodoTitleDescriptionStatusValue: '', editDescription: '', editStatus: '', editPriority: '' })
     const { allCheckedTodo, setAllCheckedTodo } = useContext(CheckedTodoContext);
     const [dense, setDense] = React.useState(false);
     const [displayDeleteButton, setDisplayDeleteButton] = useState(false);
-    // const { displayTodoAfterDeletion, setDisplayTodoAfterDeletion } = useContext(finalTodoAfterDeletionContext)
-    const { finalTodoAfterDeletion, setFinalTodoAfterDeletion } = useContext(finalTodoAfterDeletionContext)
-    // const { displayTodoAfterDeletion, setDisplayTodoAfterDeletion } = useContext(displayTodoAfterDeletionContext);
-    // const [allCheckedTodo, setallCheckedTodo] = useState([]);
-    // const [todoDisplay, setDisplayTodo] = React.useState(true);
+    const { finalTodoAfterDeletion } = useContext(finalTodoAfterDeletionContext)
+    const { todo, setTodo } = useContext(AllTodoContext)
 
     const deleteToDo = (index) => {
-        // console.log(e);
         const result = confirm('Are you sure you want to delete');
         if (result === true) {
             const finalTodo = todo.filter((item, i) =>
@@ -55,9 +46,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
             editDescription: item.description1,
             editStatus: item.status1, editPriority: item.priority1
         })
-        console.log(36, item);
     }
-
 
     const handleEditSubmit = (e) => {
         e.preventDefault();
@@ -71,8 +60,6 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
             }
             return item;
         })
-        console.log('after update todo', updatedData)
-        console.log(36, id);
         setTodo(updatedData);
         setId();
     }
@@ -95,21 +82,21 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
         console.log(checkTodo)
         setAllCheckedTodo([...allCheckedTodo, checkTodo])
     }
-    console.log('allCheckedTodo', allCheckedTodo)
-    console.log(editTodoTitleDescriptionStatus);
 
     return (
         <>
             <Demo>
                 <List dense={dense}>
+
+                    {/* Delete Button Will be Show Here */}
                     {displayDeleteButton && <DeleteBulk />}
+
                     {todo.map((item, index) => (
                         id === index ? (
 
                             <div key={index}>
 
                                 <form action="" onSubmit={handleEditSubmit}  >
-
                                     <CommonTextField id="outlined-basic"
                                         label="Title"
                                         variant="outlined"
@@ -126,9 +113,7 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         value={editTodoTitleDescriptionStatus.editDescription}
                                         onChange={handleEditTodo} />
 
-
                                     <DropDownStatusEdit value={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
-
 
                                     <PriorityDropDownEdit editTodoTitleDescriptionStatus={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
 
@@ -138,64 +123,47 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
                                         typeButton="submit"
                                         icon={<CheckCircleIcon type='sumbit' fontSize="large" />} />
 
-
                                 </form>
                             </div>) : (
 
-                            (todoDisplay ? (<ListItem
-                                key={index}
-                                secondaryAction={
-                                    <div>
-                                        {console.log(132, todoDisplay)}
-                                        <IconButton edge="end" aria-label="delete">
-                                            <DeleteIcon onClick={() => deleteToDo(index)} />
-                                        </IconButton>
-                                        <IconButton edge="end" aria-label="delete">
-                                            <Edit onClick={() => findEditItemInList(item, index)} />
-                                        </IconButton>
+                            (todoDisplay ? (
+                                <CommonTodoList
+                                    value={item}
+                                    key={index}
+                                    edge="end"
+                                    ariaLabel="delete"
+                                    iconDelete={<DeleteIcon />}
+                                    onDelete={() => deleteToDo(index)}
+                                    iconEdit={<Edit />}
+                                    onEdit={() => findEditItemInList(item, index)}
+                                    iconCheckBox={<CommonCheckBox />}
+                                    onCheckBox={handleCheckedTodo} />
 
-                                        <IconButton>
-                                            <CheckBoxComponent idx={index} handleCheckedTodo={handleCheckedTodo} />
-                                        </IconButton>
-
-
-                                    </div>
-                                }
-                            >
-
-                                {/* {console.log(item)} */}
+                            ) : (null))
+                        )
 
 
-                                <ListItemText> <h2>{item.title1}</h2> <p>{item.description1} <br /> Priority :  {item.priority1} <br />status : <i>{item.status1} </i> </p> </ListItemText>
-                            </ListItem>) : (null))
-                        )))}
-                    {console.log('  finalTodoAfterDeletion', finalTodoAfterDeletion)}
+                    )
 
+                    )}
+
+
+                    {/* THIS WILL DISPLAY WHEN TODO WILL DELETE IN BULK */}
                     {todoDisplay ? ('') : (
-                        // console.log(191, todoDisplay),
-                        // console.log('  finalTodoAfterDeletion', finalTodoAfterDeletion)
-                        (finalTodoAfterDeletion.map((element, index) => (
+                        (finalTodoAfterDeletion.map((item, index) => (
                             <div key={index}>
-                                <ListItem
 
-                                    secondaryAction={
-                                        <div>
-                                            {console.log(132, todoDisplay)}
-                                            <IconButton disabled edge="end" aria-label="delete">
-                                                <DeleteIcon onClick={() => deleteToDo(index)} />
-                                            </IconButton>
-                                            <IconButton disabled edge="end" aria-label="delete">
-                                                <Edit onClick={() => findEditItemInList(element, index)} />
-                                            </IconButton>
-                                        </div>
-                                    }
-                                >
+                                <CommonTodoList
+                                    value={item}
+                                    key={index}
+                                    edge="end"
+                                    ariaLabel="delete"
+                                    iconDelete={<DeleteIcon />}
+                                    onDelete={() => deleteToDo(index)}
+                                    iconEdit={<Edit />}
+                                    onEdit={() => findEditItemInList(item, index)}
+                                />
 
-                                    {/* {console.log(element[0].title1)} */}
-
-
-                                    <ListItemText> <h2>{element.title1}</h2> <p>{element.description1} <br /> Priority :  {element.priority1} <br />status : <i>{element.status1} </i> </p> </ListItemText>
-                                </ListItem>
                             </div>
                         )))
 
@@ -210,4 +178,5 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
     )
 }
 
-export default DisplayToDo
+
+export default TodoList;
