@@ -6,24 +6,33 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
-export default CommonDropDown = (sx, sxfc, id, label, labelId, id, value, label, onChange, value) => {
+const CommonDropDown = ({ sx, sxFormControl, id, labelId, idSelect, valueSelect, labelSelect, onChange, name, valueMenuItem }) => {
     return (
         <>
             <Box sx={sx}>
-                <FormControl sx={sxfc}>
-                    <InputLabel id={id}>{label}</InputLabel>
+                <FormControl sx={sxFormControl}>
+                    <InputLabel id={id}>{labelSelect}</InputLabel>
                     <Select
                         labelId={labelId}
-                        id={id}
-                        value={value}
-                        label={label}
+                        id={idSelect}
+                        value={valueSelect}
+                        label={labelSelect}
                         onChange={onChange}
+                        name={name}
                     >
-                        <MenuItem value={value}>{value}</MenuItem>
+                        {valueMenuItem.map((item, index) => (
+                            <MenuItem key={index} value={item}>{item}</MenuItem>
+                        ))}
+
                     </Select>
                 </FormControl>
             </Box>
         </>
     )
 }
+
+export default CommonDropDown
+
+
+
 
