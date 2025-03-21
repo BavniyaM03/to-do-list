@@ -6,16 +6,13 @@ import Header from './Header';
 import TodoList from './sub-component/TodoList'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Search from './Search';
-import { AllTodoContext, InputContext, ManageVisibilityContext } from '../App';
-import PriorityDropDown from './PriorityDropDown';
-import DropDownStatus from './DropDownStatus';
-import CommonTextField from './common-component/CommonTextField';
-import CommonButton from './common-component/CommonButton';
+import { AllTodoContext, InputContext} from '../App';
+
+import CommonTodoAddForm from './common-component/CommonTodoAddForm';
 
 export default function AddToDo() {
     const { todo, setTodo } = useContext(AllTodoContext)
-    const { inputData, setInputData } = useContext(InputContext)
-
+    const { inputData, setInputData, valueStatus, valuePriority } = useContext(InputContext)
     const addToDoInList = (e) => {
         e.preventDefault();
         setTodo([...todo,
@@ -52,41 +49,7 @@ export default function AddToDo() {
                 <Header />
                 <Search todo={todo} />
                 <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
-
-                    <form action="" onSubmit={addToDoInList}  >
-
-                        <CommonTextField
-                            id="outlined-basic"
-                            label="Title"
-                            variant="outlined"
-                            name="title"
-                            value={inputData.title}
-                            onChange={handleInputDetails}
-                            sx={{ minWidth: '25%' }}
-                            required={true} />
-
-                        <CommonTextField
-                            id="outlined-multiline-static"
-                            label="Description"
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            name="description"
-                            value={inputData.description}
-                            onChange={handleInputDetails}
-                            sx={{ minWidth: '35%' }}
-                            required={true} />
-
-                        <DropDownStatus addStatus={handleInputDetails} name="status" />
-
-                        <PriorityDropDown addPriority={handleInputDetails} name="priority" />
-
-                        <CommonButton
-                            edge="end"
-                            ariaLabel="delete"
-                            typeButton="submit"
-                            icon={<AddCircleIcon type='sumbit' fontSize="large" />} />
-                    </form>
+                    <CommonTodoAddForm onSubmit={addToDoInList} idTitle="outlined-basic" labelTitle="Title" variantTitle="outlined" nameTitle="title" valueTitle={inputData.title} onChangeTitle={handleInputDetails} sxTitle={{ minWidth: '25%' }} requiredTitle={true} idDescription="outlined-multiline-static" labelDescription="Description" variantLabelDescription="outlined" rowsDescription={4} nameDescription="description" valueDescription={inputData.description} onChangeDescription={handleInputDetails} sxDescription={{ minWidth: '35%' }} requiredDescription={true} sxStatus={{ minWidth: 120, display: 'contents' }} sxFormControlStatus={{ minWidth: '15%' }} nameStatus="status" idStatus="demo-simple-select-label" labelIdStatus="demo-simple-select-label" idSelectStatus="demo-simple-select" valueStatus={inputData.status} labelStatus="Status" onChangeStatus={handleInputDetails} valueMenuItemStatus={valueStatus} sxPriority={{ minWidth: 120, display: 'contents' }} sxFormControlPriority={{ minWidth: '15%' }} namePriority="priority" idPriority="demo-simple-select-label" labelIdPriority="demo-simple-select-label" idSelectPriority="demo-simple-select" valuePriority={inputData.priority} labelPriority="Priority" onChangePriority={handleInputDetails} valueMenuItemPriority={valuePriority} edge="end" ariaLabel="{valueConditions}" typeButton="submit" icon={<AddCircleIcon type='sumbit' fontSize="large" />} />
 
                     <TodoList />
 

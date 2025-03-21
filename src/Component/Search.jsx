@@ -7,7 +7,7 @@ import CommonButton from './common-component/CommonButton';
 
 function Search({ todo }) {
 
-    const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
+    const { todoDisplay, setTodoDisplay, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
 
     const [searchQuery, setSearchQuery] = useState('');
 

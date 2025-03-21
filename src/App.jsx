@@ -1,12 +1,6 @@
 import React, { createContext, useState } from 'react'
 import './App.css'
 import AddToDo from './Component/AddToDo'
-// import TodoList from './Component/sub-component/TodoList'
-
-import DeleteBulk from './Component/DeleteBulk';
-// import DropDown from './Component/DropDownStatus';
-// import Checkboxes from './Component/BulkDelete';
-
 export const ManageVisibilityContext = createContext();
 export const AllTodoContext = createContext();
 export const CheckedTodoContext = createContext();
@@ -89,8 +83,15 @@ function App() {
   ]);
 
   const [todoDisplay, setTodoDisplay] = useState(true);
-  const [searchResult, setSearchResult] = useState({ title: '', description: '' });
+  const [displayTodoAfterDeletion, setDisplayTodoAfterDeletion] = useState(false);
   const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
+
+  const [searchResult, setSearchResult] = useState({ title: '', description: '' });
+  const [allCheckedTodo, setAllCheckedTodo] = useState([]);
+
+  const valueStatus = ["Not Started", "In Progress", "Completed", "On Hold", "Cancelled"]
+  const valuePriority = ["Critical", "High", "Medium", "Low", "None"]
+  
 
   const [inputData, setInputData] = useState({
     title: '',
@@ -99,29 +100,23 @@ function App() {
     priority: ''
   })
 
-  const [allCheckedTodo, setAllCheckedTodo] = useState([]);
-  const [displayTodoAfterDeletion, setDisplayTodoAfterDeletion] = useState(false);
-  const [finalTodoAfterDeletion, setFinalTodoAfterDeletion] = useState([]);
-
-
-
   return (
     <>
-      <finalTodoAfterDeletionContext.Provider value={{ finalTodoAfterDeletion, setFinalTodoAfterDeletion }}>
         <displayTodoAfterDeletionContext.Provider value={{ displayTodoAfterDeletion, setDisplayTodoAfterDeletion }}>
           <AllTodoContext.Provider value={{ todo, setTodo }} >
             <ManageVisibilityContext.Provider
-              value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo}} >
+              value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo }} >
               <CheckedTodoContext.Provider value={{ allCheckedTodo, setAllCheckedTodo }}>
-                <InputContext.Provider value={{inputData, setInputData}} >
+                <InputContext.Provider value={{ inputData, setInputData, valueStatus, valuePriority }} >
+
                   <AddToDo />
+
                 </InputContext.Provider>
-                {/* <TodoList/> */}
               </CheckedTodoContext.Provider>
             </ManageVisibilityContext.Provider>
           </AllTodoContext.Provider>
         </displayTodoAfterDeletionContext.Provider>
-      </finalTodoAfterDeletionContext.Provider>
+
     </>
   )
 }
