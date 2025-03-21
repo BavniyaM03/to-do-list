@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
-import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import SearchedTodoValue from './SearchedTodoValue';
 import { ManageVisibilityContext } from '../App';
+import CommonButton from './common-component/CommonButton';
 
 function Search({ todo }) {
 
@@ -93,9 +92,12 @@ function Search({ todo }) {
                     inputProps={{ 'aria-label': 'search google maps' }}
                 />
 
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                    <SearchIcon onClick={() => dSearch(searchQuery)} />
-                </IconButton>
+                <CommonButton type="button" 
+                sx={{ p: '10px' }}  
+                ariaLabel="search" 
+                onClick={() => dSearch(searchQuery)} 
+                icon={<SearchIcon/>} />
+
             </Paper>
 
 

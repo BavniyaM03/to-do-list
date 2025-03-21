@@ -2,17 +2,15 @@ import React, { useContext, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Icon, IconButton} from '@mui/material';
-import { Button } from '@mui/material';
 import Header from './Header';
 import DisplayToDo from './DisplayToDo';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Search from './Search';
-import DropDown from './DropDownStatus';
 import { AllTodoContext, ManageVisibilityContext } from '../App';
 import PriorityDropDown from './PriorityDropDown';
 import DropDownStatus from './DropDownStatus';
 import CommonTextField from './common-component/CommonTextField';
+import CommonButton from './common-component/CommonButton';
 
 export default function AddToDo() {
     const { status, setStatus, priority, setPriority } = useContext(ManageVisibilityContext);
@@ -115,25 +113,25 @@ export default function AddToDo() {
                             rows={4}
                             name="editDescription"
                             value={description}
-                            onChange={addDescription} 
-                            sx={{ minWidth: '35%' }}/>
+                            onChange={addDescription}
+                            sx={{ minWidth: '35%' }} />
 
                         <DropDownStatus addStatus={addStatus} />
 
                         <PriorityDropDown addPriority={addPriority} />
 
 
-                        <IconButton edge="end" aria-label="delete">
-                            <Button variant="outlined" type='submit' >
-                                <AddCircleIcon type='sumbit' fontSize="large"></AddCircleIcon>
-                            </Button>
-                        </IconButton>
+                        <CommonButton
+                            edge="end"
+                            ariaLabel="delete"
+                            typeButton="submit"
+                            icon={<AddCircleIcon type='sumbit' fontSize="large" />} />
                     </form>
 
                     <DisplayToDo todo={todo} setTodo={setTodo} title={title} description={description} addTitle={addTitle} />
 
                 </Box>
-            </Container>
+            </Container >
         </>
     );
 }

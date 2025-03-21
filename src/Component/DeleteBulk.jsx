@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { AllTodoContext, CheckedTodoContext, displayTodoAfterDeletionContext, finalTodoAfterDeletionContext, ManageVisibilityContext } from '../App';
+import { AllTodoContext, CheckedTodoContext, finalTodoAfterDeletionContext, ManageVisibilityContext } from '../App';
+import CommonButton from './common-component/CommonButton';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 function DeleteBulk() {
     const { todoDisplay, setTodoDisplay } = useContext(ManageVisibilityContext);
@@ -30,15 +29,9 @@ function DeleteBulk() {
 
     return (
         <>
-            <Stack direction="row" spacing={1}>
-                <Chip
-                    label="All Todo Delete"
-                    // onClick={handleDelete}
-                    onDelete={handleDelete}
-                    deleteIcon={<DeleteIcon />}
-                    variant="outlined"
-                />
-            </Stack>
+            <CommonButton 
+            onClick={handleDelete} 
+            icon={<DeleteForeverOutlinedIcon/>}  />
         </>
     )
 }

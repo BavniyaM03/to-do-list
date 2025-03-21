@@ -1,19 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button, List} from '@mui/material';
+import { List } from '@mui/material';
 import { ListItem } from '@mui/material';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ListItemText } from '@mui/material'
-import { CheckBox, CheckBoxOutlineBlank, Edit } from '@mui/icons-material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { CheckedTodoContext, displayTodoAfterDeletionContext, finalTodoAfterDeletionContext, ManageVisibilityContext } from '../App';
+import { Edit } from '@mui/icons-material';
+import { CheckedTodoContext, finalTodoAfterDeletionContext, ManageVisibilityContext } from '../App';
 import SearchedTodoValue from './SearchedTodoValue';
 import DropDownStatusEdit from './DropDownStatusEdit';
 import PriorityDropDownEdit from './PriorityDropDownEdit';
 import { CheckBoxComponent } from './CheckBox';
 import DeleteBulk from './DeleteBulk';
 import CommonTextField from './common-component/CommonTextField';
+import CommonButton from './common-component/CommonButton';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -131,11 +132,12 @@ const DisplayToDo = ({ todo, setTodo, title, description, addTitle }) => {
 
                                     <PriorityDropDownEdit editTodoTitleDescriptionStatus={editTodoTitleDescriptionStatus} handleEditTodo={handleEditTodo} />
 
-                                    <IconButton edge="end" aria-label="delete">
-                                        <Button variant="outlined" type='submit' >
-                                            <AddCircleIcon type='sumbit' fontSize="large"></AddCircleIcon>
-                                        </Button>
-                                    </IconButton>
+                                    <CommonButton
+                                        edge="end"
+                                        ariaLabel="delete"
+                                        typeButton="submit"
+                                        icon={<CheckCircleIcon type='sumbit' fontSize="large" />} />
+
 
                                 </form>
                             </div>) : (

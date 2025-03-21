@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material"
-export default function CommonTextField({ id, label, variant, multiline, rows, name, value, onChange, sx }) {
+export default function CommonTextField({ id, label, variant, multiline, rows, name, value, onChange, sx,required,  placeholder}) {
     return (
         <>
             <TextField
@@ -11,10 +11,13 @@ export default function CommonTextField({ id, label, variant, multiline, rows, n
                 name={name}
                 value={value}
                 onChange={onChange}
-                sx={sx} />
+                sx={sx}
+                required={required}
+                placeholder={placeholder}/>          
         </>
     )
 }
+
 
 
 
