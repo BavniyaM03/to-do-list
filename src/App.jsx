@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react'
 import './App.css'
 import AddToDo from './Component/AddToDo'
+import Search from './Component/Search';
 export const ManageVisibilityContext = createContext();
 export const AllTodoContext = createContext();
 export const CheckedTodoContext = createContext();
@@ -152,7 +153,7 @@ function App() {
     }
 
   ]);
-  
+
   const [sliceArray, setSliceArray] = useState([]);
   const [todoDisplay, setTodoDisplay] = useState(true);
   const [displayTodoAfterDeletion, setDisplayTodoAfterDeletion] = useState(false);
@@ -178,18 +179,19 @@ function App() {
     <>
 
       <displayTodoAfterDeletionContext.Provider value={{ displayTodoAfterDeletion, setDisplayTodoAfterDeletion }}>
-        <AllTodoContext.Provider value={{ todo, setTodo, sliceArray, setSliceArray }} >
-          <ManageVisibilityContext.Provider
-            value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo }} >
-            <CheckedTodoContext.Provider value={{ allCheckedTodo, setAllCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked }}>
-              <InputContext.Provider value={{ inputData, setInputData, valueStatus, valuePriority }} >
 
-                  <AddToDo />
-               
-              </InputContext.Provider>
-            </CheckedTodoContext.Provider>
-          </ManageVisibilityContext.Provider>
-        </AllTodoContext.Provider>
+        <ManageVisibilityContext.Provider
+          value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo }} >
+          <CheckedTodoContext.Provider value={{ allCheckedTodo, setAllCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked }}>
+            <InputContext.Provider value={{ inputData, setInputData, valueStatus, valuePriority }} >
+              <AllTodoContext.Provider value={{ todo, setTodo, sliceArray, setSliceArray }} >
+                {/* <Search /> */}
+                <AddToDo />
+              </AllTodoContext.Provider>
+            </InputContext.Provider>
+          </CheckedTodoContext.Provider>
+        </ManageVisibilityContext.Provider>
+
       </displayTodoAfterDeletionContext.Provider>
 
     </>

@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { ManageVisibilityContext } from '../App';
+import { AllTodoContext, ManageVisibilityContext } from '../App';
 import { styled, alpha } from '@mui/material/styles';
 
 
@@ -9,6 +9,7 @@ function Search({ todo }) {
 
     const { todoDisplay, setTodoDisplay, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
     const [searchQuery, setSearchQuery] = useState('');
+    // const { todo, setTodo, sliceArray} = useState(AllTodoContext);
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -29,9 +30,9 @@ function Search({ todo }) {
             paddingLeft: `calc(1em + ${theme.spacing(4)})`,
             transition: theme.transitions.create('width'),
             [theme.breakpoints.up('sm')]: {
-                width: '12ch',
+                width: '30ch',
                 '&:focus': {
-                    width: '20ch',
+                    width: '40ch',
                 },
             },
         },
@@ -65,48 +66,40 @@ function Search({ todo }) {
     const filteredTodoItem = (userInput) => {
         setSearchQuery(userInput);
         const searchTodo = todo.filter((item, i) => {
-            if (userInput === item.title1) {
-                setTodoDisplay(false)
-                console.log('odoDisplay', todoDisplay)
-                setDisplaySearchTodo(true);
-                return item;
+            if (userInput) {
+                let arrayOfPropertiesValue = Object.values(item)
+                let descriptionRemove = arrayOfPropertiesValue.filter((item, index) => index !== 2)
+                return descriptionRemove.join('')
+                    .toLowerCase()
+                    .includes(userInput.toLowerCase());
             }
-            else if (userInput === item.status1) {
-                setTodoDisplay(false)
-                console.log('status', item.status1)
-                setDisplaySearchTodo(true);
-                return item;
+            else {
+                console.log('Invalid')
             }
-            else if (userInput === item.priority1) {
-                setTodoDisplay(false)
-                console.log('status', item.status1)
-                setDisplaySearchTodo(true);
-                return item;
-            }
-
-            return console.log(45, 'invalid input')
         })
+        setTodoDisplay(false)
+        setDisplaySearchTodo(true);
         setSearchResult(searchTodo);
-        if (searchTodo.length === 0) {
-            setTodoDisplay(true);
-        }
-        console.log('searchTodo', searchTodo);
     }
 
-    const dSearch = debounce(filteredTodoItem, 1000);
+    const dSearch = debounce(filteredTodoItem, 50);
 
     return (
         <>
-            <Search>
-                <SearchIconWrapper>
-                    <SearchIcon onClick={() => dSearch(searchQuery)} />
+            <Search >
+                <SearchIconWrapper >
+                    <SearchIcon onChange={(e) => dSearch(e.target.value)} />
                 </SearchIconWrapper>
-                <StyledInputBase
+                {/* <StyledInputBase
                     onChange={(e) => dSearch(e.target.value)}
+                    // onChange={(e) => setSearchQuery(e.target.value)}
+                    value={searchQuery}
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
-                />
+                /> */}
+
             </Search>
+            <input value={searchQuery} onChange={(e) => dSearch(e.target.value)} />
         </>
     )
 }
