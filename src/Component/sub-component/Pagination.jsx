@@ -17,8 +17,8 @@ const Pagination = memo(function Pagination() {
     useEffect(() =>
         setTodoPagination({
             ...todoPagination,
-            totalPages: todo.length / todoPagination.todoPerPage
-        }), []);
+            totalPages: Math.ceil(todo.length / todoPagination.todoPerPage)
+        }), [todo]);
 
     const lastIndex = todoPagination.currentPage * todoPagination.todoPerPage;
 
@@ -40,7 +40,7 @@ const Pagination = memo(function Pagination() {
     return (
         <Stack spacing={2} >
             <PaginationButton
-                sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', padding: 5}}
+                sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', padding: 5 }}
                 count={todoPagination.totalPages}
                 page={todoPagination.currentPage}
                 value={todoPagination.currentPage}

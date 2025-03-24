@@ -170,8 +170,8 @@ function App() {
   const [inputData, setInputData] = useState({
     title: '',
     description: '',
-    status: '',
-    priority: ''
+    status: 'Not Started',
+    priority: 'Low'
   })
 
 

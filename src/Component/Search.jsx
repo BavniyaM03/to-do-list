@@ -3,6 +3,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { AllTodoContext, ManageVisibilityContext } from '../App';
 import { styled, alpha } from '@mui/material/styles';
+import CommonDropDown from './common-component/CommonDropDown';
 
 
 function Search({ todo }) {
@@ -86,10 +87,10 @@ function Search({ todo }) {
 
     return (
         <>
-            <Search >
-                <SearchIconWrapper >
+            {/* <Search > */}
+                {/* <SearchIconWrapper >
                     <SearchIcon onChange={(e) => dSearch(e.target.value)} />
-                </SearchIconWrapper>
+                </SearchIconWrapper>  */}
                 {/* <StyledInputBase
                     onChange={(e) => dSearch(e.target.value)}
                     // onChange={(e) => setSearchQuery(e.target.value)}
@@ -97,8 +98,10 @@ function Search({ todo }) {
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
                 /> */}
+                {/* <input value={searchQuery} onChange={(e) => dSearch(e.target.value)} /> */}
+            {/* </Search> */}
 
-            </Search>
+
             <input value={searchQuery} onChange={(e) => dSearch(e.target.value)} />
         </>
     )

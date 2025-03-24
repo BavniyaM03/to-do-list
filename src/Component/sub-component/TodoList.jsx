@@ -12,6 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import CommonTodoAddForm from '../common-component/CommonTodoAddForm';
 import Pagination from './Pagination';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { DndContext } from '@dnd-kit/core';
 
 
 
@@ -102,31 +103,33 @@ function TodoList() {
 
                             <div key={index}>
 
-                                <CommonTodoAddForm onSubmit={handleEditSubmit} idTitle="outlined-basic" labelTitle="Title" variantTitle="outlined" nameTitle="editTodoTitleDescriptionStatusValue" valueTitle={editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue} onChangeTitle={handleEditTodo} sxTitle={{ minWidth: '25%' }} idDescription="outlined-multiline-static" labelDescription="Description" variantLabelDescription="outlined" rowsDescription={4} nameDescription="editDescription" valueDescription={editTodoTitleDescriptionStatus.editDescription} onChangeDescription={handleEditTodo} sxDescription={{ minWidth: '35%' }} sxStatus={{ minWidth: 120, display: 'contents' }} sxFormControlStatus={{ minWidth: '15%' }} nameStatus="editStatus" idStatus="demo-simple-select-label" labelIdStatus="demo-simple-select-label" idSelectStatus="demo-simple-select" valueStatus={editTodoTitleDescriptionStatus.editStatus} labelStatus="Status" onChangeStatus={handleEditTodo} valueMenuItemStatus={valueStatus} sxPriority={{ minWidth: 120, display: 'contents' }} sxFormControlPriority={{ minWidth: '15%' }} namePriority="editPriority" idPriority="demo-simple-select-label" labelIdPriority="demo-simple-select-label" idSelectPriority="demo-simple-select" valuePriority={editTodoTitleDescriptionStatus.editPriority} labelPriority="Priority" onChangePriority={handleEditTodo} valueMenuItemPriority={valuePriority} edge="end" ariaLabel="" typeButton="submit" icon={<CheckCircleIcon type='sumbit' fontSize="large" />} />
+                                <CommonTodoAddForm onSubmit={handleEditSubmit} idTitle="outlined-basic" labelTitle="Title" variantTitle="outlined" nameTitle="editTodoTitleDescriptionStatusValue" valueTitle={editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue} onChangeTitle={handleEditTodo} sxTitle={{ minWidth: '25%' }} requiredTitle={true} idDescription="outlined-multiline-static" labelDescription="Description" variantLabelDescription="outlined" rowsDescription={4} nameDescription="editDescription" valueDescription={editTodoTitleDescriptionStatus.editDescription} onChangeDescription={handleEditTodo} sxDescription={{ minWidth: '35%' }} requiredDescription={true} sxStatus={{ minWidth: 120, display: 'contents' }} sxFormControlStatus={{ minWidth: '15%' }} nameStatus="editStatus" idStatus="demo-simple-select-label" labelIdStatus="demo-simple-select-label" idSelectStatus="demo-simple-select" valueStatus={editTodoTitleDescriptionStatus.editStatus} labelStatus="Status" onChangeStatus={handleEditTodo} valueMenuItemStatus={valueStatus} sxPriority={{ minWidth: 120, display: 'contents' }} sxFormControlPriority={{ minWidth: '15%' }} namePriority="editPriority" idPriority="demo-simple-select-label" labelIdPriority="demo-simple-select-label" idSelectPriority="demo-simple-select" valuePriority={editTodoTitleDescriptionStatus.editPriority} labelPriority="Priority" onChangePriority={handleEditTodo} valueMenuItemPriority={valuePriority} edge="end" ariaLabel="" typeButton="submit" icon={<CheckCircleIcon type='sumbit' fontSize="large"  />} />
 
                             </div>) : (
 
                             (todoDisplay ? (
-                                <>
+                                // <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCorners} >
+                                    <div>
 
-                                    <SortableContext items={sliceArray} strategy={verticalListSortingStrategy} >
-                                        <CommonTodoList
-                                            id={item.id}
-                                            value={item}
-                                            key={item.id}
-                                            edge="end"
-                                            ariaLabel="delete"
-                                            iconDelete={<DeleteIcon />}
-                                            onDelete={() => deleteToDo(index)}
-                                            iconEdit={<Edit />}
-                                            onEdit={() => findEditItemInList(item, index)}
-                                            iconCheckBox={<Checkbox check={checked} idx={index} sx={{color: '#ced4da'}} onChange={(e) => handleCheckedTodo(e, index)} />}
-                                        // onCheckBox={() => handleCheckedTodo(index)}
-                                        />
-                                        {/* <Checkbox check={checked} idx={index} onChange={(e)=>handleCheckedTodo(e, index)}/> */}
-                                    </SortableContext>
+                                        {/* <SortableContext items={sliceArray} strategy={verticalListSortingStrategy} > */}
+                                            <CommonTodoList
+                                                id={item.id}
+                                                value={item}
+                                                key={item.id}
+                                                edge="end"
+                                                ariaLabel="delete"
+                                                iconDelete={<DeleteIcon />}
+                                                onDelete={() => deleteToDo(index)}
+                                                iconEdit={<Edit />}
+                                                onEdit={() => findEditItemInList(item, index)}
+                                                iconCheckBox={<Checkbox check={checked} idx={index} sx={{ color: '#ced4da' }} onChange={(e) => handleCheckedTodo(e, index)} />}
+                                            // onCheckBox={() => handleCheckedTodo(index)}
+                                            />
+                                            {/* <Checkbox check={checked} idx={index} onChange={(e)=>handleCheckedTodo(e, index)}/> */}
+                                        {/* </SortableContext> */}
 
-                                </>
+                                    </div>
+                                // </DndContext>
 
                             ) : (null))
                         )))}

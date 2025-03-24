@@ -14,8 +14,8 @@ const CommonTodoList = ({ value, edge, ariaLabel, onDelete, onEdit, onCheckBox, 
     }
     return (
         <>
-
-            <ListItem ref={setNodeRef}  {...attributes} {...listeners} style={style} className="common-todo-item"
+            <ListItem className="common-todo-item"
+                /* <ListItem ref={setNodeRef}  {...attributes} {...listeners} style={style} className="common-todo-item" */
                 secondaryAction={
                     <div className="common-todo-buttons">
                         <CommonButton edge={edge} ariaLabel={ariaLabel} onClick={onDelete} icon={iconDelete} />
