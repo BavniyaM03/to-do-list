@@ -5,7 +5,7 @@ import CommonTextField from "./CommonTextField"
 const CommonTodoAddForm = ({ onSubmit, idTitle, labelTitle, variantLabelTite, nameTitle, valueTitle, onChangeTitle, sxTitle, requiredTitle, idDescription, labelDescription, variantLabelDescription, rowsDescription, nameDescription, valueDescription, onChangeDescription, sxDescription, requiredDescription, sxStatus, sxFormControlStatus, nameStatus, idStatus, labelIdStatus, idSelectStatus, valueStatus, labelStatus, onChangeStatus, valueMenuItemStatus, sxPriority, sxFormControlPriority, namePriority, idPriority, labelIdPriority, idSelectPriority, valuePriority, labelPriority, onChangePriority, valueMenuItemPriority, edge, ariaLabel, typeButton, icon }) => {
     return (
         <>
-            <form action="" onSubmit={onSubmit}  >
+            <form action="" onSubmit={onSubmit}  style={{backgroundColor: '#343a40', padding: 50}} >
 
                 <CommonTextField
                     id={idTitle}

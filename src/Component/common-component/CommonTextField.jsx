@@ -1,5 +1,7 @@
 import { TextField } from "@mui/material"
-export default function CommonTextField({ id, label, variant, multiline, rows, name, value, onChange, sx,required,  placeholder}) {
+import "./assets/CommonTextField.css"; // Import external CSS
+
+export default function CommonTextField({ id, label, variant, multiline, rows, name, value, onChange, sx, required, placeholder }) {
     return (
         <>
             <TextField
@@ -13,11 +15,16 @@ export default function CommonTextField({ id, label, variant, multiline, rows, n
                 onChange={onChange}
                 sx={sx}
                 required={required}
-                placeholder={placeholder}/>          
+                placeholder={placeholder}
+                //below this is for style
+                className="custom-text-field"
+                InputLabelProps={{ className: "custom-label" }}
+                InputProps={{ className: "custom-input" }}
+            />
+
         </>
     )
 }
-
 
 
 

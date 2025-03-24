@@ -1,0 +1,39 @@
+.common-todo-item {
+    background-color: #343a40 !important;
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid #cfd9e4;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .common-todo-item:hover {
+    border-color: #1E90FF;
+  }
+  
+  .common-todo-text h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #ced4da;
+  }
+  
+  .common-todo-text p {
+    margin: 4px 0;
+    font-size: 1rem;
+    color: #ddd;
+  }
+  
+  .common-todo-text i {
+    color: #ffcc00;
+  }
+  
+  .common-todo-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .common-todo-buttons .custom-icon-button:hover {
+    color: #1E90FF;
+  }
+  

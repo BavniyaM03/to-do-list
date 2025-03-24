@@ -1,0 +1,19 @@
+.custom-icon-button {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.custom-button {
+  color:  #ced4da !important;
+  transition: all 0.3s ease-in-out;
+  padding: 8px 16px;
+}
+
+.custom-icon-button:hover .custom-button {
+  color: #818f9c !important;
+}
+
+.custom-button.Mui-disabled {
+  background-color: #555 !important;
+  color: #999 !important;
+}

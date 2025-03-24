@@ -1,0 +1,14 @@
+.common-checkbox {
+    color: #cfd9e4 !important;
+  }
+  
+  .common-checkbox.Mui-checked {
+    color: #1E90FF !important;
+  }
+  
+  .common-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  

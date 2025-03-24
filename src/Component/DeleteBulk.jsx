@@ -1,25 +1,27 @@
 import React, { useContext } from 'react';
-import { AllTodoContext, CheckedTodoContext} from '../App';
+import { AllTodoContext, CheckedTodoContext } from '../App';
 import CommonButton from './common-component/CommonButton';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
-function DeleteBulk({setDisplayDeleteButton}) {
-    const { allCheckedTodo } = useContext(CheckedTodoContext);
-    const { todo, setTodo } = useContext(AllTodoContext);
+function DeleteBulk() {
+    const { allCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked} = useContext(CheckedTodoContext);
+    const { todo, setTodo, sliceArray, setSliceArray } = useContext(AllTodoContext);
 
     const handleDelete = () => {
-        const temp = todo.filter(item =>
+        const temp = sliceArray.filter(item =>
             !allCheckedTodo.some(checkedItem => checkedItem.id === item.id)
         );
-        setTodo(temp);
+        setChecked(false);
+        setSliceArray(temp);   
         setDisplayDeleteButton(false);
+        
     };
 
     return (
         <>
             <CommonButton
                 onClick={handleDelete}
-                icon={<DeleteForeverOutlinedIcon />} />
+                icon={<DeleteForeverOutlinedIcon sx={{color: '#343a40'}}/>} />
         </>
     )
 }

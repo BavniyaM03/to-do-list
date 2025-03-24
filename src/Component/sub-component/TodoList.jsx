@@ -7,8 +7,13 @@ import SearchedTodoValue from '../SearchedTodoValue';
 import DeleteBulk from '../DeleteBulk';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CommonTodoList from '../common-component/CommonTodoList';
-import { CheckBox, Edit } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
+import Checkbox from '@mui/material/Checkbox';
 import CommonTodoAddForm from '../common-component/CommonTodoAddForm';
+import Pagination from './Pagination';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+
+
 
 const Demo = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
@@ -19,19 +24,19 @@ function TodoList() {
     const { valueStatus, valuePriority } = useContext(InputContext)
     const [id, setId] = useState();
     const [editTodoTitleDescriptionStatus, seteditTodoTitleDescriptionStatus] = useState({ editTodoTitleDescriptionStatusValue: '', editDescription: '', editStatus: '', editPriority: '' })
-    const { allCheckedTodo, setAllCheckedTodo } = useContext(CheckedTodoContext);
+    const { allCheckedTodo, setAllCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked } = useContext(CheckedTodoContext);
     const [dense, setDense] = React.useState(false);
-    const [displayDeleteButton, setDisplayDeleteButton] = useState(false);
-    const { todo, setTodo } = useContext(AllTodoContext)
-    const [checked, setChecked] = useState(false);
+    // const [displayDeleteButton, setDisplayDeleteButton] = useState(false);
+    const { todo, setTodo, sliceArray, setSliceArray } = useContext(AllTodoContext)
+    // const [checked, setChecked] = useState(false);
 
     const deleteToDo = (index) => {
         const result = confirm('Are you sure you want to delete');
         if (result === true) {
-            const finalTodo = todo.filter((item, i) =>
+            const finalTodo = sliceArray.filter((item, i) =>
                 index != i
             )
-            setTodo(finalTodo);
+            setSliceArray(finalTodo);
             alert('are you sure you want to delete')
         }
     }
@@ -48,7 +53,7 @@ function TodoList() {
     const handleEditSubmit = (e) => {
         e.preventDefault();
         console.log(41, id)
-        const updatedData = todo.filter((item, i) => {
+        const updatedData = sliceArray.filter((item, i) => {
             if (id === i) {
                 item.title1 = editTodoTitleDescriptionStatus.editTodoTitleDescriptionStatusValue;
                 item.description1 = editTodoTitleDescriptionStatus.editDescription;
@@ -57,7 +62,7 @@ function TodoList() {
             }
             return item;
         })
-        setTodo(updatedData);
+        setSliceArray(updatedData);
         setId();
     }
 
@@ -73,23 +78,26 @@ function TodoList() {
         })
     }
 
-    const handleCheckedTodo = (idx) => {
-        setChecked(true)
+    const handleCheckedTodo = (e, idx) => {
+        setChecked(e.target.checked)
         setDisplayDeleteButton(true)
         const checkTodo = todo[idx]
         console.log(checkTodo)
         setAllCheckedTodo([...allCheckedTodo, checkTodo])
     }
 
+    console.log('checked', checked)
+
+
+
     return (
         <>
-            <Demo>
+            <Demo style={{ backgroundColor: '#ced4da' }}>
                 <List dense={dense}>
 
-                    {/* Delete Button Will be Show Here */}
-                    {displayDeleteButton && <DeleteBulk setDisplayDeleteButton={setDisplayDeleteButton} />}
+                    {displayDeleteButton && <DeleteBulk setDisplayDeleteButton={setDisplayDeleteButton} displayDeleteButton={displayDeleteButton} />}
 
-                    {todo.map((item, index) => (
+                    {sliceArray.map((item, index) => (
                         id === index ? (
 
                             <div key={index}>
@@ -100,25 +108,34 @@ function TodoList() {
 
                             (todoDisplay ? (
                                 <>
-                                    <CommonTodoList
-                                        value={item}
-                                        key={index}
-                                        edge="end"
-                                        ariaLabel="delete"
-                                        iconDelete={<DeleteIcon />}
-                                        onDelete={() => deleteToDo(index)}
-                                        iconEdit={<Edit />}
-                                        onEdit={() => findEditItemInList(item, index)}
-                                        iconCheckBox={<CheckBox />}
-                                        onCheckBox={() => handleCheckedTodo(index)}
-                                    />
+
+                                    <SortableContext items={sliceArray} strategy={verticalListSortingStrategy} >
+                                        <CommonTodoList
+                                            id={item.id}
+                                            value={item}
+                                            key={item.id}
+                                            edge="end"
+                                            ariaLabel="delete"
+                                            iconDelete={<DeleteIcon />}
+                                            onDelete={() => deleteToDo(index)}
+                                            iconEdit={<Edit />}
+                                            onEdit={() => findEditItemInList(item, index)}
+                                            iconCheckBox={<Checkbox check={checked} idx={index} sx={{color: '#ced4da'}} onChange={(e) => handleCheckedTodo(e, index)} />}
+                                        // onCheckBox={() => handleCheckedTodo(index)}
+                                        />
+                                        {/* <Checkbox check={checked} idx={index} onChange={(e)=>handleCheckedTodo(e, index)}/> */}
+                                    </SortableContext>
+
                                 </>
 
                             ) : (null))
                         )))}
+
+
                     {/*   SEARCH TODO VALUE WILL SHOW HERE */}
                     <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo} />
                 </List>
+                <Pagination />
             </Demo>
         </>
     )
