@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AllTodoContext, ManageVisibilityContext } from "../../App";
 import PaginationButton from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import CommonPagination from '../common-component/CommonPagination';
 
 const Pagination = memo(function Pagination() {
     const { todo, sliceArray, setSliceArray } = useContext(AllTodoContext);
@@ -22,7 +23,7 @@ const Pagination = memo(function Pagination() {
             totalPages: Math.ceil(todo.length / todoPagination.todoPerPage)
         }), [todo]);
 
-        console.log('Pagination')
+    console.log('Pagination')
 
     const lastIndex = todoPagination.currentPage * todoPagination.todoPerPage;
 
@@ -42,16 +43,25 @@ const Pagination = memo(function Pagination() {
     };
 
     return (
-        <Stack spacing={2} >
-            <PaginationButton
-                sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', padding: 5 }}
-                count={todoPagination.totalPages}
-                page={todoPagination.currentPage}
-                value={todoPagination.currentPage}
-                onChange={handleChange}
-                color="primary"
-                size="large" />
-        </Stack>
+        // <Stack spacing={2} >
+        //     <PaginationButton
+        //         sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', padding: 5 }}
+        //         count={todoPagination.totalPages}
+        //         page={todoPagination.currentPage}
+        //         value={todoPagination.currentPage}
+        //         onChange={handleChange}
+        //         color="primary"
+        //         size="large" />
+        // </Stack>
+
+        <CommonPagination
+            sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', padding: 5 }}
+            count={todoPagination.totalPages}
+            page={todoPagination.currentPage}
+            value={todoPagination.currentPage}
+            onChange={handleChange}
+            color="primary"
+            size="large" />
     );
 })
 

@@ -8,6 +8,7 @@ export const CheckedTodoContext = createContext();
 export const displayTodoAfterDeletionContext = createContext();
 export const finalTodoAfterDeletionContext = createContext();
 export const InputContext = createContext();
+export const PaginationContext = createContext();
 
 function App() {
   const [todo, setTodo] = useState([
@@ -159,9 +160,15 @@ function App() {
   const [displayTodoAfterDeletion, setDisplayTodoAfterDeletion] = useState(false);
   const [displaySearchTodo, setDisplaySearchTodo] = useState(false)
   const [displayDeleteButton, setDisplayDeleteButton] = useState(false);
-  const [searchResult, setSearchResult] = useState({ title: '', description: '' });
+  const [searchResult, setSearchResult] = useState([]);
   const [allCheckedTodo, setAllCheckedTodo] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [todoPagination, setTodoPagination] = useState(
+    {
+      todoPerPage: 5,
+      currentPage: 1,
+      totalPages: ''
+    })
 
   const valueStatus = ["Not Started", "In Progress", "Completed", "On Hold", "Cancelled"]
   const valuePriority = ["Critical", "High", "Medium", "Low", "None"]
@@ -184,10 +191,12 @@ function App() {
           value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo }} >
           <CheckedTodoContext.Provider value={{ allCheckedTodo, setAllCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked }}>
             <InputContext.Provider value={{ inputData, setInputData, valueStatus, valuePriority }} >
-              <AllTodoContext.Provider value={{ todo, setTodo, sliceArray, setSliceArray }} >
-                {/* <Search /> */}
-                <AddToDo />
-              </AllTodoContext.Provider>
+              <PaginationContext value={{todoPagination, setTodoPagination}}>
+                <AllTodoContext.Provider value={{ todo, setTodo, sliceArray, setSliceArray }} >
+                  {/* <Search /> */}
+                  <AddToDo />
+                </AllTodoContext.Provider>
+              </PaginationContext>
             </InputContext.Provider>
           </CheckedTodoContext.Provider>
         </ManageVisibilityContext.Provider>

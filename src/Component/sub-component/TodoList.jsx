@@ -32,13 +32,13 @@ function TodoList() {
     const { todo, setTodo, sliceArray, setSliceArray } = useContext(AllTodoContext)
     const [confirmation, setConfirmation] = useState({
         open: false,
-        deleteIndex : null
+        deleteIndex: null
     })
     // const [checked, setChecked] = useState(false);
 
     const deleteToDo = (index) => {
-        setConfirmation({ ...confirmation, open: true, deleteIndex : index })
-       
+        setConfirmation({ ...confirmation, open: true, deleteIndex: index })
+
     }
 
     const confirmationDelete = (e) => {
@@ -71,7 +71,7 @@ function TodoList() {
 
     // const innerFunction = deleteToDo();
 
-    
+
 
 
     const findEditItemInList = (item, index) => {
@@ -171,8 +171,8 @@ function TodoList() {
                     <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo} />
                 </List>
 
-                <CommonDialogBox open={confirmation.open} handleChange={(e) => {confirmationDelete(e)}} />
-                <Pagination />
+                <CommonDialogBox open={confirmation.open} handleChange={(e) => { confirmationDelete(e) }} />
+                {todoDisplay && <Pagination />}
             </Demo>
         </>
     )

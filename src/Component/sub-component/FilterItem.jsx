@@ -1,14 +1,15 @@
 import { useContext, useState } from "react"
 import CommonDropDown from "../common-component/CommonDropDown"
-import { AllTodoContext, ManageVisibilityContext } from "../../App";
+import { AllTodoContext, ManageVisibilityContext, PaginationContext } from "../../App";
 
-const filterByStatus= ["Not Started", "In Progress", "Completed", "On Hold", "Cancelled"]
-const filterByPriority= ["Critical", "High", "Medium", "Low", "None"]
+const filterByStatus= ["All", "Not Started", "In Progress", "Completed", "On Hold", "Cancelled"]
+const filterByPriority= ["All", "Critical", "High", "Medium", "Low", "None"]
 
 function FilterItem() {
     const { todoDisplay, setTodoDisplay, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
     const [searchQuery, setSearchQuery] = useState('');
     const { todo, setTodo } = useContext(AllTodoContext);
+    const {todoPagination, setTodoPagination} = useContext(PaginationContext);
 
     function debounce(func, delay) {
         let timeout;
@@ -23,12 +24,23 @@ function FilterItem() {
     const filteredTodoItem = (userInput) => {
         setSearchQuery(userInput);
         const searchTodo = todo.filter((item, i) => {
-            if (userInput) {
+            if (userInput !== "All") {
                 let arrayOfPropertiesValue = Object.values(item)
                 let descriptionRemove = arrayOfPropertiesValue.filter((item, index) => index !== 2)
                 return descriptionRemove.join('')
                     .toLowerCase()
                     .includes(userInput.toLowerCase());
+            }
+            
+            else if(userInput === "All"){
+                // let arrayOfPropertiesValue = Object.values(item)
+                // let descriptionRemove = arrayOfPropertiesValue.filter((item, index) => index !== 2)
+                console.log(userInput)
+                console.log(37, item);
+                return item;
+                //  descriptionRemove.join('')
+                //     .toLowerCase()
+                //     .includes(userInput.toLowerCase());
             }
             else {
                 console.log('Invalid')
@@ -37,6 +49,7 @@ function FilterItem() {
         setTodoDisplay(false)
         setDisplaySearchTodo(true);
         setSearchResult(searchTodo);
+        setTodoPagination({...todoPagination,  currentPage: 1})
     }
 
     const dSearch = debounce(filteredTodoItem, 50);

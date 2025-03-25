@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { AllTodoContext, ManageVisibilityContext } from '../App';
+import { AllTodoContext, ManageVisibilityContext, PaginationContext } from '../App';
 import { styled, alpha } from '@mui/material/styles';
 import CommonDropDown from './common-component/CommonDropDown';
 
 
 function Search() {
 
-    const { todoDisplay, setTodoDisplay, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
+    const { todoDisplay, setTodoDisplay, searchResult, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
     const [searchQuery, setSearchQuery] = useState('');
     const { todo, setTodo, sliceArray} = useContext(AllTodoContext);
+    const {todoPagination, setTodoPagination} = useContext(PaginationContext);
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -81,7 +82,11 @@ function Search() {
         setTodoDisplay(false)
         setDisplaySearchTodo(true);
         setSearchResult(searchTodo);
+        setTodoPagination({...todoPagination,  currentPage: 1})
     }
+
+    // console.log('search item', searchTodo)
+    console.log('search item 87', searchResult)
 
     console.log(todo, setTodo);
     const dSearch = debounce(filteredTodoItem, 50);
