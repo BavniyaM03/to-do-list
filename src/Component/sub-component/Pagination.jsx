@@ -1,11 +1,13 @@
 import React, { memo } from 'react'
 import { useContext, useEffect, useState } from "react";
-import { AllTodoContext } from "../../App";
+import { AllTodoContext, ManageVisibilityContext } from "../../App";
 import PaginationButton from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 const Pagination = memo(function Pagination() {
     const { todo, sliceArray, setSliceArray } = useContext(AllTodoContext);
+    const { todoDisplay, setTodoDisplay, setSearchResult, searchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
+
 
     const [todoPagination, setTodoPagination] = useState(
         {
@@ -19,6 +21,8 @@ const Pagination = memo(function Pagination() {
             ...todoPagination,
             totalPages: Math.ceil(todo.length / todoPagination.todoPerPage)
         }), [todo]);
+
+        console.log('Pagination')
 
     const lastIndex = todoPagination.currentPage * todoPagination.todoPerPage;
 

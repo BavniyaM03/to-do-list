@@ -6,11 +6,11 @@ import { styled, alpha } from '@mui/material/styles';
 import CommonDropDown from './common-component/CommonDropDown';
 
 
-function Search({ todo }) {
+function Search() {
 
     const { todoDisplay, setTodoDisplay, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
     const [searchQuery, setSearchQuery] = useState('');
-    // const { todo, setTodo, sliceArray} = useState(AllTodoContext);
+    const { todo, setTodo, sliceArray} = useContext(AllTodoContext);
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -83,6 +83,7 @@ function Search({ todo }) {
         setSearchResult(searchTodo);
     }
 
+    console.log(todo, setTodo);
     const dSearch = debounce(filteredTodoItem, 50);
 
     return (

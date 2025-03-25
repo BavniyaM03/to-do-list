@@ -69,11 +69,11 @@ export default function AddToDo() {
     // )
 
 
-    console.log(todo);
+    console.log(72, todo);
     console.log(sliceArray);
     return (
         <>
-            <Header todo={todo} />
+            <Header/>
             <FilterItem/>
             <CssBaseline />
             <Container sx={{ marginTop: 10, bgcolor: '#ced4da' }}>

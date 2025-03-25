@@ -2,7 +2,8 @@ import { useContext, useState } from "react"
 import CommonDropDown from "../common-component/CommonDropDown"
 import { AllTodoContext, ManageVisibilityContext } from "../../App";
 
-const features = ["Not Started", "In Progress", "Completed", "On Hold", "Cancelled", "Critical", "High", "Medium", "Low", "None"]
+const filterByStatus= ["Not Started", "In Progress", "Completed", "On Hold", "Cancelled"]
+const filterByPriority= ["Critical", "High", "Medium", "Low", "None"]
 
 function FilterItem() {
     const { todoDisplay, setTodoDisplay, setSearchResult, setDisplaySearchTodo } = useContext(ManageVisibilityContext);
@@ -42,7 +43,10 @@ function FilterItem() {
 
     return (
         <>
-            <CommonDropDown valueMenuItem={features} labelSelect="Filter" onChange={(e) => dSearch(e.target.value)} sx={{ marginTop : 5, marginLeft : 5}} />
+           <div style={{display : 'flex'}}>
+           <CommonDropDown valueMenuItem={filterByStatus} labelSelect="Filter By Status" onChange={(e) => dSearch(e.target.value)} sx={{ marginTop : 5, marginLeft : 5, display : 'inline'}} />
+           <CommonDropDown valueMenuItem={filterByPriority} labelSelect="Filter By Priority" onChange={(e) => dSearch(e.target.value)} sx={{ marginTop : 5, marginLeft : 0}} />
+           </div>
         </>
     )
 }

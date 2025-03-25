@@ -5,9 +5,14 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { LibraryBooksSharp } from '@mui/icons-material';
-import SearchBar from './Search';
+// import SearchBar from './Search';
+import Search from './Search';
+import { AllTodoContext } from '../App';
+import { useContext } from 'react';
 
-function Header({ todo }) {
+function Header() {
+    const { todo, setTodo, sliceArray, setSliceArray } = useContext(AllTodoContext)
+    console.log('header', todo)
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ bgcolor: '#343a40' }}>
@@ -29,7 +34,7 @@ function Header({ todo }) {
                     >
                         TodoList
                     </Typography>
-                    <SearchBar todo={todo} />
+                    <Search/>
                 </Toolbar>
             </AppBar>
         </Box>

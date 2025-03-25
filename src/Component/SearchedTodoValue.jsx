@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { ManageVisibilityContext } from '../App';
+import { AllTodoContext, ManageVisibilityContext } from '../App';
 import CommonTodoList from './common-component/CommonTodoList';
 function SearchedTodoValue() {
     const { searchResult, displaySearchTodo } = useContext(ManageVisibilityContext);
+    const {todo, setTodo} = useContext(AllTodoContext);
     return (
         <>
             {displaySearchTodo && (
