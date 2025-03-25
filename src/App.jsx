@@ -9,6 +9,7 @@ export const displayTodoAfterDeletionContext = createContext();
 export const finalTodoAfterDeletionContext = createContext();
 export const InputContext = createContext();
 export const PaginationContext = createContext();
+export const popupContext = createContext();
 
 function App() {
   const [todo, setTodo] = useState([
@@ -182,6 +183,11 @@ function App() {
   })
 
 
+  const [confirmation, setConfirmation] = useState({
+    open: false,
+    deleteIndex: null
+  })
+
   return (
     <>
 
@@ -191,12 +197,14 @@ function App() {
           value={{ todoDisplay, setTodoDisplay, searchResult, setSearchResult, displaySearchTodo, setDisplaySearchTodo }} >
           <CheckedTodoContext.Provider value={{ allCheckedTodo, setAllCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked }}>
             <InputContext.Provider value={{ inputData, setInputData, valueStatus, valuePriority }} >
-              <PaginationContext value={{todoPagination, setTodoPagination}}>
-                <AllTodoContext.Provider value={{ todo, setTodo, sliceArray, setSliceArray }} >
-                  {/* <Search /> */}
-                  <AddToDo />
-                </AllTodoContext.Provider>
-              </PaginationContext>
+              <popupContext.Provider value={{confirmation, setConfirmation}}>
+                <PaginationContext value={{ todoPagination, setTodoPagination }}>
+                  <AllTodoContext.Provider value={{ todo, setTodo, sliceArray, setSliceArray }} >
+                    {/* <Search /> */}
+                    <AddToDo />
+                  </AllTodoContext.Provider>
+                </PaginationContext>
+              </popupContext.Provider>
             </InputContext.Provider>
           </CheckedTodoContext.Provider>
         </ManageVisibilityContext.Provider>

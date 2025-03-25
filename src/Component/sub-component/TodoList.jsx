@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { List } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AllTodoContext, CheckedTodoContext, InputContext, ManageVisibilityContext } from '../../App';
+import { AllTodoContext, CheckedTodoContext, InputContext, ManageVisibilityContext, popupContext } from '../../App';
 import SearchedTodoValue from '../SearchedTodoValue';
 import DeleteBulk from '../DeleteBulk';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -28,21 +28,21 @@ function TodoList() {
     const [editTodoTitleDescriptionStatus, seteditTodoTitleDescriptionStatus] = useState({ editTodoTitleDescriptionStatusValue: '', editDescription: '', editStatus: '', editPriority: '' })
     const { allCheckedTodo, setAllCheckedTodo, displayDeleteButton, setDisplayDeleteButton, checked, setChecked } = useContext(CheckedTodoContext);
     const [dense, setDense] = React.useState(false);
-    // const [displayDeleteButton, setDisplayDeleteButton] = useState(false);
     const { todo, setTodo, sliceArray, setSliceArray } = useContext(AllTodoContext)
-    const [confirmation, setConfirmation] = useState({
-        open: false,
-        deleteIndex: null
-    })
-    // const [checked, setChecked] = useState(false);
+    const {confirmation, setConfirmation} = useContext(popupContext)
+     
+    // const [confirmation, setConfirmation] = useState({
+    //     open: false,
+    //     deleteIndex: null
+    // })
+
+    console.log(39, confirmation);
 
     const deleteToDo = (index) => {
         setConfirmation({ ...confirmation, open: true, deleteIndex: index })
-
     }
 
     const confirmationDelete = (e) => {
-        console.log(e.target.value)
         setConfirmation({ ...confirmation, open: false })
         if (e.target.value === 'true') {
             const finalTodo = sliceArray.filter((item, i) =>
@@ -52,26 +52,6 @@ function TodoList() {
         }
         console.log(confirmation)
     }
-
-
-    // const deleteToDo = (index) => {
-    //     setConfirmation({ ...confirmation, open: true })
-    //    return function confirmationDelete (e) {
-    //       return  setConfirmation({ ...confirmation, agree: e.target.value, open: false })
-    //         console.log(confirmation)
-    //     }
-    //     if (confirmation.agree === 'true') {
-    //         const finalTodo = sliceArray.filter((item, i) =>
-    //             index != i
-    //         )
-    //         setSliceArray(finalTodo);
-    //     }
-    // }
-
-
-    // const innerFunction = deleteToDo();
-
-
 
 
     const findEditItemInList = (item, index) => {
@@ -168,7 +148,7 @@ function TodoList() {
 
 
                     {/*   SEARCH TODO VALUE WILL SHOW HERE */}
-                    <SearchedTodoValue searchResult={searchResult} displaySearchTodo={displaySearchTodo} />
+                    <SearchedTodoValue id={id} setId={setId} searchResult={searchResult} displaySearchTodo={displaySearchTodo} editTodoTitleDescriptionStatus={editTodoTitleDescriptionStatus} seteditTodoTitleDescriptionStatus={seteditTodoTitleDescriptionStatus } />
                 </List>
 
                 <CommonDialogBox open={confirmation.open} handleChange={(e) => { confirmationDelete(e) }} />
